@@ -17,6 +17,7 @@ var option = process.argv[2];
 
 
 // Initialize Spotify client
+console.log('keys.spotify', keys.spotify);
 var spotify = new Spotify(keys.spotify);
 switch (option) {
     case "movie-this":
@@ -50,7 +51,11 @@ function spotifyCall(songName) {
         if (err) {
             return console.log('Error occurred: ' + err);
         }
-        console.log("\n_Track Info_" + "\nArtist: " + data.tracks.items[0].artists[0].name + "\nSong: " + data.tracks.items[0].name + "\nLink: " + data.tracks.items[0].external_urls.spotify + "\nAlbum: " + data.tracks.items[0].album.name + "\n" + "\nGreat song! Search another :)")
+
+        for(var i = 0; i < data.tracks.items.length; i++) {
+            console.log("\n_Track Info_" + "\nArtist: " + data.tracks.items[i].artists[0].name + "\nSong: " + data.tracks.items[i].name + "\nLink: " + data.tracks.items[i].external_urls.spotify + "\nAlbum: " + data.tracks.items[i].album.name + "\n" + "\nGreat song! Search another :)")
+        }
+        
     });
 }
 
@@ -69,6 +74,7 @@ function movieThis(movieName) {
                 movieName = "Terminator";
             }// console.log(response.data);
             // Data of Movie
+            console.log("stuffs we got back", response.data);
             console.log("\n_Movie Info_" + "\nTitle: " + response.data.Title + "\nRelease Year: " + response.data.Year + "\nRating: " + response.data.Rated + "\nRelease Country: " + response.data.Country + "\nLanguage: " + response.data.Language + "\nPlot: " + response.data.Plot + "\nActors: " + response.data.Actors + "\n" + "\n Love this one!");
 
 
@@ -86,6 +92,10 @@ function concertThis(artist) {
     axios.get(bandsQueryUrl).then(
         function (response) {
             console.log("_Upcoming Events_");
-            console.log("Artist: " + artist + "\nVenue: " + response.data[0].venue.name + "\nLocation: " + response.data[0].venue.country + "\nDate: " + response.data[0].datatime + "\nRock on dude!");
+            console.log(response.data);
+            for (var i = 0; i < response.data.length; i++){
+                console.log("Artist: " + artist + "\nVenue: " + response.data[i].venue.name + "\nLocation: " + response.data[i].venue.country + "\nDate: " + response.data[1].datetime + "\nRock on dude!");
+            }
+            
         });
 }
